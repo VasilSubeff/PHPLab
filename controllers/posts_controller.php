@@ -14,7 +14,41 @@
 
       // we use the given id to get the right post
       $post = Post::find($_GET['id']);
+      $post->id_multiplied = $post->id * 30;
       require_once('views/posts/show.php');
     }
+
+    public function update() {
+     if (!isset($_GET['id']))
+        return call('pages', 'error');
+
+
+
+
+      // we use the given id to get the right post
+      $post = Post::find($_GET['id']);
+      $post->id_multiplied = $post->id * 30;
+      require_once('views/posts/show.php');
+
+      //$update = Post::update($post->id, $post->author, $post->content);
+      require_once('views/posts/update.php');
+    }
+
+    public function insert() {
+      
+
+      $insert = Post::insert();
+      $max_id = Post::find_max_id();
+
+      
+
+      //require_once('views/posts/show.php');
+      header("Location:/?controller=posts&action=show&id=$max_id");
+
+
+    }
+
+
+   
   }
 ?>

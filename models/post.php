@@ -45,6 +45,35 @@
 
       return new Post($post['id'], $post['author'], $post['content']);
     }
+
+    public static function update($id, $name, $content){
+      $db = Db::getInstance();
+      $mysqli = $db->getConnection();
+      $req = $mysqli->prepare('UPDATE posts SET author = ?, content = ? WHERE id = ?');
+      $req->bind_param("ssi", $author, $content, $id);
+      $req->execute();
+
+    }
+
+    public static function find_max_id() {
+      
+      $list = [];
+      $db = Db::getInstance();
+      $mysqli = $db->getConnection();
+      $sql_query = "SELECT MAX(id) as id FROM posts";
+      $req = $mysqli->query($sql_query, 0);
+      $row = mysqli_fetch_row($req);
+      return $row[0];
+    }
+
+    public static function insert() {
+      $list = [];
+      $db = Db::getInstance();
+      $mysqli = $db->getConnection();
+      $sql_query = "INSERT INTO posts VALUES (DEFAULT, '', '')";
+      $req = $mysqli->query($sql_query);
+    }
+    
   }
 
 
